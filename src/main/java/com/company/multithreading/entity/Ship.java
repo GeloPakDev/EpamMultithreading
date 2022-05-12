@@ -5,19 +5,19 @@ import com.company.multithreading.types.LoadType;
 import java.util.StringJoiner;
 
 public class Ship {
-    private int size;
+    private int capacity;
     private LoadType loadType;
 
-    public Ship(int size, LoadType loadType) {
-        this.size = size;
+    public Ship(int capacity, LoadType loadType) {
+        this.capacity = capacity;
         this.loadType = loadType;
     }
 
     public void action(int count) {
         if (loadType == LoadType.UNLOAD) {
-            size -= count;
+            capacity -= count;
         } else if (loadType == LoadType.UPLOAD) {
-            size += count;
+            capacity += count;
         }
     }
 
@@ -25,14 +25,14 @@ public class Ship {
         return loadType;
     }
 
-    public int getSize() {
-        return size;
+    public int getCapacity() {
+        return capacity;
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", Ship.class.getSimpleName() + "[", "]")
-                .add("size=" + size)
+                .add("size=" + capacity)
                 .add("loadType=" + loadType)
                 .toString();
     }
@@ -44,13 +44,13 @@ public class Ship {
 
         Ship ship = (Ship) o;
 
-        if (size != ship.size) return false;
+        if (capacity != ship.capacity) return false;
         return loadType == ship.loadType;
     }
 
     @Override
     public int hashCode() {
-        int result = size;
+        int result = capacity;
         result = 31 * result + (loadType != null ? loadType.hashCode() : 0);
         return result;
     }
