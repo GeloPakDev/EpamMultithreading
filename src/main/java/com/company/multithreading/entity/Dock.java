@@ -2,6 +2,7 @@ package com.company.multithreading.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class Dock {
     //TODO:Add Singleton
@@ -51,5 +52,34 @@ public class Dock {
 
     public void setAvailablePierCounter(int availablePierCounter) {
         this.availablePierCounter = availablePierCounter;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dock dock = (Dock) o;
+
+        if (capacity != dock.capacity) return false;
+        if (availablePierCounter != dock.availablePierCounter) return false;
+        return piers != null ? piers.equals(dock.piers) : dock.piers == null;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Dock.class.getSimpleName() + "[", "]")
+                .add("piers=" + piers)
+                .add("capacity=" + capacity)
+                .add("availablePierCounter=" + availablePierCounter)
+                .toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = piers != null ? piers.hashCode() : 0;
+        result = 31 * result + capacity;
+        result = 31 * result + availablePierCounter;
+        return result;
     }
 }
