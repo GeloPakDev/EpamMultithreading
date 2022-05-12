@@ -37,10 +37,6 @@ public class Dock {
         return piers;
     }
 
-    public void setPiers(List<Pier> piers) {
-        this.piers = piers;
-    }
-
     public int getCapacity() {
         return capacity;
     }

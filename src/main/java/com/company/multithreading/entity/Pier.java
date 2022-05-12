@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pier {
-    private List<Ship> store;
+    private List<Ship> pier;
     private static final int maxShipsInPier = 1;
     private static final int minShipsInPier = 0;
     private int shipsCounter = 0;
 
     public Pier() {
-        store = new ArrayList<>();
+        pier = new ArrayList<>();
     }
 
     public synchronized boolean add(Ship ship) {
         try {
             if (shipsCounter < maxShipsInPier) {
                 notifyAll();
-                store.add(ship);
+                pier.add(ship);
                 shipsCounter++;
             } else {
                 wait();
@@ -33,9 +33,9 @@ public class Pier {
         try {
             if (shipsCounter > minShipsInPier) {
                 notifyAll();
-                for (Ship ship : store) {
+                for (Ship ship : pier) {
                     shipsCounter--;
-                    store.remove(ship);
+                    pier.remove(ship);
                     return ship;
                 }
             }
