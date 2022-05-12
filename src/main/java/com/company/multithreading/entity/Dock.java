@@ -1,28 +1,59 @@
 package com.company.multithreading.entity;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dock {
-    private AtomicBoolean isBusy = new AtomicBoolean();
+    //TODO:Add Singleton
+    private List<Pier> piers;
+    private int capacity = 1000;
+    private int availablePierCounter = 5;
 
-    public AtomicBoolean isBusy() {
-        return isBusy;
+    public Dock() {
+        piers = new ArrayList<>();
+        for (int i = 0; i < availablePierCounter; i++) {
+            piers.add(new Pier());
+        }
+    }
+    //
+    public synchronized Pier getPier() {
+        try {
+            notifyAll();
+            for (Pier pier : piers) {
+                //If pier is not empty move to the another
+                if (pier.isBusy()) {
+                    availablePierCounter--;
+                }
+                return pier;
+            }
+            wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public void setBusy(boolean busy) {
-        isBusy.set(busy);
+    public List<Pier> getPiers() {
+        return piers;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Dock dock = (Dock) o;
-        return isBusy.equals(dock.isBusy);
+    public void setPiers(List<Pier> piers) {
+        this.piers = piers;
     }
 
-    @Override
-    public int hashCode() {
-        return isBusy.hashCode();
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getAvailablePierCounter() {
+        return availablePierCounter;
+    }
+
+    public void setAvailablePierCounter(int availablePierCounter) {
+        this.availablePierCounter = availablePierCounter;
     }
 }
