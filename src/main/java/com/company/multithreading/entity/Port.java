@@ -3,7 +3,6 @@ package com.company.multithreading.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Port {
     public static final int PIER_COUNT = 5;
